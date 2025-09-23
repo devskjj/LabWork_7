@@ -15,10 +15,10 @@ public class Goods {
         Random rnd = new Random();
         TypeOfGoods[] types = TypeOfGoods.values();
 
-        this.weight = rnd.nextInt();
+        this.weight = rnd.nextInt(200) + 1;
         this.type = types[rnd.nextInt(types.length)];
         this.quality = QualityOfGoods.NORMAL;
-        this.price = rnd.nextInt();
+        this.price = rnd.nextInt(200) + 50;
     }
 
     @Override
@@ -29,5 +29,18 @@ public class Goods {
                 ", quality=" + quality +
                 ", price=" + price +
                 '}';
+    }
+
+    public void setQuality(QualityOfGoods quality) {
+        this.quality = quality;
+        System.out.println("Состояние изменено на: " + quality);
+    }
+
+    public void decreaseQuality() {
+        quality.decreaseQuality(this);
+    }
+
+    public double getFinalPrice() {
+        return price * quality.getRate();
     }
 }
