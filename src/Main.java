@@ -1,5 +1,10 @@
+import entity.City;
+import entity.Event;
+import helper.Helper;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Привет, мир!");
+        Application.run();
+
     }
 }
