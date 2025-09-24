@@ -2,6 +2,7 @@ package entity;
 
 import helper.Helper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Trader {
@@ -10,10 +11,11 @@ public class Trader {
    private int many;
    private List<Goods> purchasedGoods; // список того что останется после покупки у торговца
 
-    public Trader(int maxLoad, int speedDay, int many) {
+    public Trader(int maxLoad, int many) {
         this.maxLoad = maxLoad;
         this.speedDay = 3;
         this.many = Helper.getRandom(100,200);
+        this.purchasedGoods = new ArrayList<>();
     }
 
     public boolean isEnoughToBuy(Goods good) {

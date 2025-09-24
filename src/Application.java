@@ -13,7 +13,7 @@ public class Application {
         Event event = new Event();
         System.out.println(event.getEvent().get(Helper.getRandom(0, 8)));//Будет вытаскивать рандомные события
 
-        Trader trader = new Trader(200, 3, 300);
+        Trader trader = new Trader(200, 300);
         Goods goods = new Goods(10, GoodsType.COLOR,new Quality("Нормальное",1),20);
         System.out.println(goods);
 
