@@ -31,6 +31,18 @@ public class Goods {
         System.out.printf("Состояние %s изменено на: %s%n", type.getValue(), quality.getValue());
     }
 
+    public Quality getQuality() {
+        return quality;
+    }
+
+    public static double getRateFromQuality(Goods good) {
+        return good.getQuality().getRate();
+    }
+
+    public int getPriceOfPurchase() {
+        return priceOfPurchase;
+    }
+
     public void decreaseQuality() {
         quality.decreaseQuality(this);
     }

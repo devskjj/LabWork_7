@@ -1,19 +1,28 @@
+import enums.Quality;
 import models.Goods;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Application {
     public static void runApplication() {
-        List<Goods> randomGoods = getRandomGoods(7);
+        List<Goods> randomGoods = getRandomGoods(5);
         printGoods(randomGoods);
 
         System.out.println("-------------");
-
-        getWorseIfRain(randomGoods);
+        randomGoods.get(0).setQuality(Quality.HALF_DAMAGED);
+        randomGoods.get(1).setQuality(Quality.ALMOST_FULL_DAMAGED);
         printGoods(randomGoods);
+        System.out.println(randomGoods.size());
+
+
+        deleteBestGoodIfBandits(randomGoods);
+        System.out.println("-------------");
+
+        printGoods(randomGoods);
+        System.out.println(randomGoods.size());
+
+//        getWorseIfRain(randomGoods);
+//        printGoods(randomGoods);
 
 
     }
@@ -34,6 +43,13 @@ public class Application {
             goods.get(rnd.nextInt(goods.size())).decreaseQuality();
             System.out.println("Дождь испортил товар.");
         }
+    }
+
+    private static void deleteBestGoodIfBandits(List<Goods> goods) {
+        Comparator cmp = Comparator.comparingDouble(Goods::getRateFromQuality).thenComparingInt(Goods::getPriceOfPurchase);
+        Goods best = Collections.max(goods, cmp);
+        System.out.println("Лучший товар - " + best);
+        goods.remove(best);
     }
 
     private static void printGoods(List<Goods> list) {
