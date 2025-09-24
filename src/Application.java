@@ -13,13 +13,13 @@ public class Application {
 
         initializeBuyingProcess(goods, trader);
 
-        Event.values()[Helper.getRandom(Event.values().length-1)].consequenceOfEvents(trader);
+        Event.values()[Helper.getRandom(Event.values().length - 1)].consequenceOfEvents(trader);
 
         print("Все что осталось после событий");
+        print("Денег: " + trader.getMany());
         printAllGoods(trader.getPurchasedGoods());
-
-
     }
+
 
     private static void initializeBuyingProcess(List<Goods> goods, Trader trader) {
         print("Список доступных товаров для покупки: ");
