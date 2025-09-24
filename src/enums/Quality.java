@@ -9,7 +9,7 @@ public enum Quality {
             good.setQuality(SLIGHTLY_DAMAGED);
         }
     },
-    SLIGHTLY_DAMAGED(0.95, "Слегка испорчен ") {
+    SLIGHTLY_DAMAGED(0.95, "Слегка испорчен") {
         @Override
         public void decreaseQuality(Goods good) {
             good.setQuality(HALF_DAMAGED);

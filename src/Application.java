@@ -5,24 +5,29 @@ import java.util.*;
 
 public class Application {
     public static void runApplication() {
-        List<Goods> randomGoods = getRandomGoods(5);
-        printGoods(randomGoods);
+        List<Goods> goods = getRandomGoods(5);
+        printAllGoods(goods);
 
         System.out.println("-------------");
-        randomGoods.get(0).setQuality(Quality.HALF_DAMAGED);
-        randomGoods.get(1).setQuality(Quality.ALMOST_FULL_DAMAGED);
-        printGoods(randomGoods);
-        System.out.println(randomGoods.size());
+        goods.get(0).setQuality(Quality.HALF_DAMAGED);
+        goods.get(1).setQuality(Quality.ALMOST_FULL_DAMAGED);
+
+        printAllGoods(goods);
+        System.out.println(goods.size());
 
 
-        deleteBestGoodIfBandits(randomGoods);
+        deleteBestGoodIfBandits(goods);
         System.out.println("-------------");
 
-        printGoods(randomGoods);
-        System.out.println(randomGoods.size());
+        printAllGoods(goods);
+        System.out.println(goods.size());
 
-//        getWorseIfRain(randomGoods);
-//        printGoods(randomGoods);
+        getWorseGood(goods);
+        printAllGoods(goods);
+
+
+//        getWorseIfRain(goods);
+//        printGoods(goods);
 
 
     }
@@ -36,7 +41,7 @@ public class Application {
         return goods;
     }
 
-    private static void getWorseIfRain(List<Goods> goods) {
+    private static void getWorseGoodIfRain(List<Goods> goods) {
         Random rnd = new Random();
         double chanceOfRain = 0.3;
         if (rnd.nextDouble() < chanceOfRain) {
@@ -52,7 +57,13 @@ public class Application {
         goods.remove(best);
     }
 
-    private static void printGoods(List<Goods> list) {
+    private static void getWorseGood(List<Goods> goods) {
+        Random rnd = new Random();
+        goods.get(rnd.nextInt(goods.size())).decreaseQuality();
+        System.out.println("Случайно испортился один из товаров. Это печально.");
+    }
+
+    private static void printAllGoods(List<Goods> list) {
         for (Goods goods : list) {
             System.out.println(goods);
         }
