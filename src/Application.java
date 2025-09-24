@@ -46,7 +46,7 @@ public class Application {
     }
 
     private static void deleteBestGoodIfBandits(List<Goods> goods) {
-        Comparator cmp = Comparator.comparingDouble(Goods::getRateFromQuality).thenComparingInt(Goods::getPriceOfPurchase);
+        Comparator<Goods> cmp = Comparator.comparingDouble(Goods::getRateFromQuality).thenComparingInt(Goods::getPriceOfPurchase);
         Goods best = Collections.max(goods, cmp);
         System.out.println("Лучший товар - " + best);
         goods.remove(best);
