@@ -9,12 +9,12 @@ public class Trader {
    private int maxLoad;
    private int speedDay;
    private int many;
-   private List<Goods> purchasedGoods; // список того что останется после покупки у торговца
+   private List<Goods> purchasedGoods;
 
-    public Trader(int maxLoad, int many) {
+    public Trader(int maxLoad) {
         this.maxLoad = maxLoad;
         this.speedDay = 3;
-        this.many = Helper.getRandom(100,200);
+        this.many = Helper.getRandom(400,1000);
         this.purchasedGoods = new ArrayList<>();
     }
 
@@ -22,7 +22,7 @@ public class Trader {
         return maxLoad >= good.getWeight() && many >= good.getPriceOfPurchase(); //првоерка на деньги/вес
     }
 
-    public void buy(Goods good) {  //изменения полей при покупке, это разовый метод
+    public void buy(Goods good) {
         if (isEnoughToBuy(good)) {
             many -= good.getPriceOfPurchase();
             maxLoad -= good.getWeight();

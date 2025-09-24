@@ -2,54 +2,58 @@ import enums.Event;
 import helper.Helper;
 import models.Goods;
 import models.Trader;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.*;
 
 public class Application {
     public static void runApplication() {
         List<Goods> goods = getRandomGoods(5);
+        Trader trader = new Trader(300);
 
-        Trader trader = new Trader(1000,2000);
-        printAllGoods(goods);
-        for (int i = 0; i < goods.size(); i++) {
-            trader.buy(goods.get(i));
-        }
-        System.out.println("Все что купил");
-
-        printAllGoods(trader.getPurchasedGoods());
+        initializeBuyingProcess(goods, trader);
 
         Event.values()[Helper.getRandom(Event.values().length-1)].consequenceOfEvents(trader);
 
-        System.out.println("Все что осталось после событий");
+        print("Все что осталось после событий");
         printAllGoods(trader.getPurchasedGoods());
 
 
+    }
 
+    private static void initializeBuyingProcess(List<Goods> goods, Trader trader) {
+        print("Список доступных товаров для покупки: ");
+        printAllGoods(goods);
+        print();
 
-//
-//        System.out.println("-------------");
-//        goods.get(0).setQuality(Quality.HALF_DAMAGED);
-//        goods.get(1).setQuality(Quality.ALMOST_FULL_DAMAGED);
-//
-//
-//        printAllGoods(goods);
-//        System.out.println(goods.size());
-//
-//
-//        deleteBestGoodIfBandits(goods);
-//        System.out.println("-------------");
-//
-//        printAllGoods(goods);
-//        System.out.println(goods.size());
-//
-//        getWorseGood(goods);
-//        printAllGoods(goods);
+        print("Денег у торговца: " + trader.getMany());
+        print("Грузоподъемность телеги: " + trader.getMaxLoad());
+        print();
 
+        print("Процесс покупки...");
+        buyGoods(goods, trader);
+        print();
 
-//        getWorseIfRain(goods);
-//        printGoods(goods);
+        print("Денег осталось: " + trader.getMany());
+        print("Место в телеге осталось: " + trader.getMaxLoad());
+        print();
 
+        print("Купленные товары в телеге: ");
+        printAllGoods(trader.getPurchasedGoods());
+    }
 
+    private static void buyGoods(List<Goods> goods, Trader trader) {
+        print("-".repeat(90));
+        for (Goods good : goods) {
+            if (trader.isEnoughToBuy(good)) {
+                trader.buy(good);
+                print("Куплен товар: " + good);
+                print("-".repeat(90));
+            } else {
+                print("Нельзя взять: " + good);
+                print("-".repeat(90));
+            }
+        }
     }
 
     private static List<Goods> getRandomGoods(int count) {
@@ -66,26 +70,40 @@ public class Application {
         double chanceOfRain = 0.3;
         if (rnd.nextDouble() < chanceOfRain) {
             goods.get(rnd.nextInt(goods.size())).decreaseQuality();
-            System.out.println("Дождь испортил товар.");
+            print("Дождь испортил товар.");
         }
     }
 
     private static void deleteBestGoodIfBandits(List<Goods> goods) {
         Comparator<Goods> cmp = Comparator.comparingDouble(Goods::getRateFromQuality).thenComparingInt(Goods::getPriceOfPurchase);
         Goods best = Collections.max(goods, cmp);
-        System.out.println("Лучший товар - " + best);
+        print("Лучший товар - " + best);
         goods.remove(best);
     }
 
     private static void getWorseGood(List<Goods> goods) {
         Random rnd = new Random();
         goods.get(rnd.nextInt(goods.size())).decreaseQuality();
-        System.out.println("Случайно испортился один из товаров. Это печально.");
+        print("Случайно испортился один из товаров. Это печально.");
     }
 
     private static void printAllGoods(List<Goods> list) {
+        print("-".repeat(76));
         for (Goods goods : list) {
-            System.out.println(goods);
+            print(goods);
         }
+        print("-".repeat(76));
+    }
+
+    private static void print(Goods goods) {
+        System.out.println(goods);
+    }
+
+    private static void print(String fmt, Object... args) {
+        System.out.println(String.format(fmt, args));
+    }
+
+    private static void print() {
+        System.out.println();
     }
 }
