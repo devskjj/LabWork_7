@@ -1,51 +1,71 @@
-import entity.*;
-import enums.GoodsType;
-import helper.Helper;
+import models.Goods;
+import enums.Quality;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Application {
-    public static void run(){
-        City city = new City();//сразу будет создаваться рандомный город с рандомным растоянием
-        System.out.println(city.getName());
-        System.out.println(city.getDistance());
-        Event event = new Event();
-        System.out.println(event.getEvent().get(Helper.getRandom(0, 8)));//Будет вытаскивать рандомные события
+    public static void runApplication() {
+        List<Goods> goods = getRandomGoods(5);
+        printAllGoods(goods);
 
-        Trader trader = new Trader(200, 300);
-        Goods goods = new Goods(10, GoodsType.COLOR,new Quality("Нормальное",1),20);
-        System.out.println(goods);
+        System.out.println("-------------");
+        goods.get(0).setQuality(Quality.HALF_DAMAGED);
+        goods.get(1).setQuality(Quality.ALMOST_FULL_DAMAGED);
 
-        List<Goods> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(new Goods(50, GoodsType.COLOR,new Quality("Нормальное",1),40));
-        }
+        printAllGoods(goods);
+        System.out.println(goods.size());
 
-        buyGoods(list, trader); // происходит покупка и составление списка нового
 
-        System.out.println(trader.getMany());
-        System.out.println(trader.getMaxLoad());
+        deleteBestGoodIfBandits(goods);
+        System.out.println("-------------");
 
-        System.out.println("Список купленных товаров");
-        for (Goods good : trader.getPurchasedGoods()) {
-            System.out.println(good);
-        }
+        printAllGoods(goods);
+        System.out.println(goods.size());
 
+        getWorseGood(goods);
+        printAllGoods(goods);
+
+
+//        getWorseIfRain(goods);
+//        printGoods(goods);
 
 
     }
 
-    private static void buyGoods (List<Goods> goods, Trader trader) { // заполнить телегу на основе листа с товарами и возможностями торговца
-        for (Goods good : goods) {
-           if (trader.isEnoughToBuy(good)) {
-               trader.buy(good);
-               System.out.println("Куплен товар: " + good);
-           } else {
-               System.out.println("Недостаточно денег или места в телеге.");
-           }
+    private static List<Goods> getRandomGoods(int count) {
+        List<Goods> goods = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            goods.add(new Goods());
+        }
+        Collections.shuffle(goods);
+        return goods;
+    }
+
+    private static void getWorseGoodIfRain(List<Goods> goods) {
+        Random rnd = new Random();
+        double chanceOfRain = 0.3;
+        if (rnd.nextDouble() < chanceOfRain) {
+            goods.get(rnd.nextInt(goods.size())).decreaseQuality();
+            System.out.println("Дождь испортил товар.");
         }
     }
 
+    private static void deleteBestGoodIfBandits(List<Goods> goods) {
+        Comparator<Goods> cmp = Comparator.comparingDouble(Goods::getRateFromQuality).thenComparingInt(Goods::getPriceOfPurchase);
+        Goods best = Collections.max(goods, cmp);
+        System.out.println("Лучший товар - " + best);
+        goods.remove(best);
+    }
 
+    private static void getWorseGood(List<Goods> goods) {
+        Random rnd = new Random();
+        goods.get(rnd.nextInt(goods.size())).decreaseQuality();
+        System.out.println("Случайно испортился один из товаров. Это печально.");
+    }
+
+    private static void printAllGoods(List<Goods> list) {
+        for (Goods goods : list) {
+            System.out.println(goods);
+        }
+    }
 }

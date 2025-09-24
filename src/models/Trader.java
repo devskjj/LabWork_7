@@ -1,4 +1,4 @@
-package entity;
+package models;
 
 import helper.Helper;
 
@@ -19,12 +19,12 @@ public class Trader {
     }
 
     public boolean isEnoughToBuy(Goods good) {
-        return maxLoad >= good.getWeight() && many >= good.getPriceOnShop(); //првоерка на деньги/вес
+        return maxLoad >= good.getWeight() && many >= good.getPriceOfPurchase(); //првоерка на деньги/вес
     }
 
     public void buy(Goods good) {  //изменения полей при покупке, это разовый метод
         if (isEnoughToBuy(good)) {
-            many -= good.getPriceOnShop();
+            many -= good.getPriceOfPurchase();
             maxLoad -= good.getWeight();
             purchasedGoods.add(good);
         }
