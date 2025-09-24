@@ -28,7 +28,7 @@ public class Goods {
 
     public void setQuality(Quality quality) {
         this.quality = quality;
-        System.out.println("Состояние изменено на: " + quality);
+        System.out.printf("Состояние %s изменено на: %s%n", type.getValue(), quality.getValue());
     }
 
     public void decreaseQuality() {
