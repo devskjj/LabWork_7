@@ -2,15 +2,34 @@ package entity;
 
 import helper.Helper;
 
+import java.util.List;
+
 public class Trader {
    private int maxLoad;
    private int speedDay;
    private int many;
+   private List<Goods> purchasedGoods; // список того что останется после покупки у торговца
 
     public Trader(int maxLoad, int speedDay, int many) {
         this.maxLoad = maxLoad;
         this.speedDay = 3;
         this.many = Helper.getRandom(100,200);
+    }
+
+    public boolean isEnoughToBuy(Goods good) {
+        return maxLoad >= good.getWeight() && many >= good.getPriceOnShop(); //првоерка на деньги/вес
+    }
+
+    public void buy(Goods good) {  //изменения полей при покупке, это разовый метод
+        if (isEnoughToBuy(good)) {
+            many -= good.getPriceOnShop();
+            maxLoad -= good.getWeight();
+            purchasedGoods.add(good);
+        }
+    }
+
+    public List<Goods> getPurchasedGoods() {
+        return purchasedGoods;
     }
 
     public int getMaxLoad() {
