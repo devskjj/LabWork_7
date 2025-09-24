@@ -2,7 +2,7 @@ package enums;
 
 import models.Goods;
 
-public enum QualityOfGoods {
+public enum Quality {
     NORMAL(1.2, "Нормальное") {
         @Override
         public void decreaseQuality(Goods good) {
@@ -37,7 +37,7 @@ public enum QualityOfGoods {
     private final double rate;
     private final String value;
 
-    QualityOfGoods(double rate, String value) {
+    Quality(double rate, String value) {
         this.rate = rate;
         this.value = value;
     }

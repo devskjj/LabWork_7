@@ -1,6 +1,6 @@
 package enums;
 
-public enum TypeOfGoods {
+public enum Types {
     MEAT("Мясо"),
     DRYFRUITS("Сухофрукты"),
     GRAIN("Зерно"),
@@ -10,7 +10,7 @@ public enum TypeOfGoods {
 
     private String value;
 
-    TypeOfGoods(String value) {
+    Types(String value) {
         this.value = value;
     }
 
