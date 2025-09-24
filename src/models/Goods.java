@@ -3,16 +3,13 @@ package models;
 import enums.QualityOfGoods;
 import enums.TypeOfGoods;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 public class Goods {
     private int weight;
     private TypeOfGoods type;
     private QualityOfGoods quality;
-    private int price;
+    private int priceOfPurchase;
 
     public Goods() {
         Random rnd = new Random();
@@ -21,17 +18,12 @@ public class Goods {
         this.weight = rnd.nextInt(200) + 1;
         this.type = types[rnd.nextInt(types.length)];
         this.quality = QualityOfGoods.NORMAL;
-        this.price = rnd.nextInt(200) + 50;
+        this.priceOfPurchase = rnd.nextInt(200) + 50;
     }
 
     @Override
     public String toString() {
-        return "Goods{" +
-                "weight=" + weight +
-                ", type=" + type +
-                ", quality=" + quality +
-                ", price=" + price +
-                '}';
+        return String.format("Тип: %-10s | Вес: %-3d | Качество: %s | Стоимость покупки: %-3d |", type.getValue(), weight, quality.getValue(), priceOfPurchase);
     }
 
     public void setQuality(QualityOfGoods quality) {
@@ -44,6 +36,6 @@ public class Goods {
     }
 
     public double getFinalPrice() {
-        return price * quality.getRate();
+        return priceOfPurchase * quality.getRate();
     }
 }
