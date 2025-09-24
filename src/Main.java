@@ -1,31 +1,74 @@
 import enums.QualityOfGoods;
 import models.Goods;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        Goods good = new Goods();
-        System.out.println(good);
-        System.out.println(good.getFinalPrice());
+        Application.runApplication();
 
-        good.setQuality(QualityOfGoods.HALF_DAMAGED);
-        System.out.println(good);
-        System.out.println(good.getFinalPrice());
 
-        good.decreaseQuality();
-        System.out.println(good);
-        System.out.println(good.getFinalPrice());
 
-        good.decreaseQuality();
-        System.out.println(good);
-        System.out.println(good.getFinalPrice());
 
-        good.decreaseQuality();
-        System.out.println(good);
-        System.out.println(good.getFinalPrice());
 
-        good.setQuality(QualityOfGoods.NORMAL);
-        System.out.println(good);
-        System.out.println(good.getFinalPrice());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        Goods good = new Goods();
+//        List<Goods> goods = new ArrayList<>();
+//        goods.add(new Goods());
+//        goods.add(new Goods());
+//        goods.add(new Goods());
+//        goods.add(new Goods());
+//        goods.add(new Goods());
+//
+//
+//        System.out.println(goods);
+//        Collections.shuffle(goods);
+//        System.out.println(goods);
+//
+//        System.out.println(goods.get(4));
+//
+//        System.out.println("--------");
+//
+//        List<Goods> kkk = new ArrayList<>();
+//        kkk = good.getRandomGoods(7);
+//        good.printGoods(kkk);
+//        System.out.println(good);
+//        System.out.println(good.getFinalPrice());
+//
+//        good.setQuality(QualityOfGoods.HALF_DAMAGED);
+//        System.out.println(good);
+//        System.out.println(good.getFinalPrice());
+//
+//        good.decreaseQuality();
+//        System.out.println(good);
+//        System.out.println(good.getFinalPrice());
+//
+//        good.decreaseQuality();
+//        System.out.println(good);
+//        System.out.println(good.getFinalPrice());
+//
+//        good.decreaseQuality();
+//        System.out.println(good);
+//        System.out.println(good.getFinalPrice());
+//
+//        good.setQuality(QualityOfGoods.NORMAL);
+//        System.out.println(good);
+//        System.out.println(good.getFinalPrice());
 
     }
 }
