@@ -1,29 +1,49 @@
+import enums.Event;
+import helper.Helper;
 import models.Goods;
-import enums.Quality;
+import models.Trader;
 
 import java.util.*;
 
 public class Application {
     public static void runApplication() {
         List<Goods> goods = getRandomGoods(5);
+
+        Trader trader = new Trader(1000,2000);
         printAllGoods(goods);
+        for (int i = 0; i < goods.size(); i++) {
+            trader.buy(goods.get(i));
+        }
+        System.out.println("Все что купил");
 
-        System.out.println("-------------");
-        goods.get(0).setQuality(Quality.HALF_DAMAGED);
-        goods.get(1).setQuality(Quality.ALMOST_FULL_DAMAGED);
+        printAllGoods(trader.getPurchasedGoods());
 
-        printAllGoods(goods);
-        System.out.println(goods.size());
+        Event.values()[Helper.getRandom(Event.values().length-1)].consequenceOfEvents(trader);
+
+        System.out.println("Все что осталось после событий");
+        printAllGoods(trader.getPurchasedGoods());
 
 
-        deleteBestGoodIfBandits(goods);
-        System.out.println("-------------");
 
-        printAllGoods(goods);
-        System.out.println(goods.size());
 
-        getWorseGood(goods);
-        printAllGoods(goods);
+//
+//        System.out.println("-------------");
+//        goods.get(0).setQuality(Quality.HALF_DAMAGED);
+//        goods.get(1).setQuality(Quality.ALMOST_FULL_DAMAGED);
+//
+//
+//        printAllGoods(goods);
+//        System.out.println(goods.size());
+//
+//
+//        deleteBestGoodIfBandits(goods);
+//        System.out.println("-------------");
+//
+//        printAllGoods(goods);
+//        System.out.println(goods.size());
+//
+//        getWorseGood(goods);
+//        printAllGoods(goods);
 
 
 //        getWorseIfRain(goods);
