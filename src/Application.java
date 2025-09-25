@@ -1,9 +1,6 @@
 import enums.Event;
 import helper.Helper;
-import models.City;
-import models.Goods;
-import models.RoadsideTavern;
-import models.Trader;
+import models.*;
 
 import java.util.*;
 
@@ -19,9 +16,13 @@ public class Application {
 
         City startCity = new City();
         City destinationCity = new City();
+
         while (destinationCity.getName().equals(startCity.getName())) {
             destinationCity = new City();
         }
+        trader.setCurrentCity(startCity);
+        trader.setNewDestinationCity(destinationCity);
+
         Helper.print("=== Start ===");
         Helper.print("Start city: " + startCity.getName());
         Helper.print("End city: " + destinationCity.getName());
@@ -29,6 +30,7 @@ public class Application {
         Helper.print("Start goods:");
         Helper.printAllGoods(trader.getPurchasedGoods());
         int distanceRemaining = destinationCity.getDistance();
+        int initialDistance = destinationCity.getDistance();
 
         while (distanceRemaining > 0) {
             Helper.print("New day");
@@ -46,6 +48,19 @@ public class Application {
             if (randomEvent == Event.ROADSIDE_TAVERN) {
                 RoadsideTavern.runRoadsideTavernEvent(trader);
             }
+
+            if (randomEvent == Event.TAVERN_RUMORS && !trader.isChangeCity()) {
+                int distanceTraveled = initialDistance - distanceRemaining;
+                TavernRumors.showInfo(trader, distanceRemaining, distanceTraveled);
+                if (trader.isChangeCity()) {
+
+                    initialDistance = trader.getNewDestinationCity().getDistance();
+                    distanceRemaining = (distanceTraveled / 4) + (trader.getNewDestinationCity().getDistance() * 2 / 3);
+                    destinationCity = trader.getNewDestinationCity();
+
+                }
+            }
+
 
             if (trader.getSpeedDay() > 0) {
                 distanceRemaining -= trader.getSpeedDay();

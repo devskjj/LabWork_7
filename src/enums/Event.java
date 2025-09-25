@@ -99,6 +99,15 @@ public enum Event {
                 Helper.print("Нет товаров, которые могли бы испортиться.");
             }
         }
+    },
+    TAVERN_RUMORS("Таверна со слухами") {
+        @Override
+        public void consequenceOfEvents(Trader trader) {
+            if (!trader.isChangeCity()) {
+                Helper.print("Событие: " + Event.TAVERN_RUMORS.value);
+            }
+
+        }
     };
 
     public abstract void consequenceOfEvents(Trader trader);
