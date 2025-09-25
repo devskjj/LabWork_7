@@ -5,9 +5,7 @@ import models.Goods;
 import models.Trader;
 import org.w3c.dom.ls.LSOutput;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Random;
+import java.util.*;
 
 public enum Event {
     NORMAL_DAY("Обычный день") {
@@ -71,7 +69,7 @@ public enum Event {
         public void consequenceOfEvents(Trader trader) {  // добавил что бы могли или деньги забрать или товар как по условию тз
             Helper.print("Событие: " + Event.BANDITS.value);
             if (trader.getMany() > 0) {
-                int stolenMoney = trader.getMany();
+                double stolenMoney = trader.getMany();
                 trader.setMany(0);
                 Helper.print("У торговца украли деньги: " + stolenMoney);
             } else if (!trader.getPurchasedGoods().isEmpty()) { // может упасть ошибка если список пустой
@@ -88,8 +86,7 @@ public enum Event {
     ROADSIDE_TAVERN("Придорожный трактир") {
         @Override
         public void consequenceOfEvents(Trader trader) {
-            Helper.print("Событие: " + Event.ROADSIDE_TAVERN.value);
-            // тут мне нужно реализовать ночлег еда продажа товара
+            Helper.print("Событие:  " + Event.ROADSIDE_TAVERN.value);
         }
     },
     PRODUCT_DETERIORATED("Товар испотился") {

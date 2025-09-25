@@ -8,7 +8,7 @@ import java.util.List;
 public class Trader {
    private int maxLoad;
    private int speedDay;
-   private int many;
+   private double many;
    private List<Goods> purchasedGoods;
    private final int  baseSpeedDay = 3;
 
@@ -51,11 +51,11 @@ public class Trader {
         this.speedDay = speedDay;
     }
 
-    public int getMany() {
+    public double getMany() {
         return many;
     }
 
-    public void setMany(int many) {
+    public void setMany(double many) {
         this.many = many;
     }
 
