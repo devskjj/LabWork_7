@@ -10,12 +10,9 @@ import java.util.*;
 public class Application {
     public static void runApplication() {
         List<Goods> goods = Helper.getRandomGoods(7);
-        Trader trader = new Trader(500);
+        Trader trader = new Trader();
 
         initializeBuyingProcess(goods, trader);
-
-//        Event.values()[Helper.getRandom(Event.values().length - 1)].consequenceOfEvents(trader);
-
 
         City startCity = new City();
         City destinationCity = new City();
@@ -65,6 +62,7 @@ public class Application {
         Helper.print("Денег осталось: " + trader.getMany());
         Helper.print("Место в телеге осталось: " + trader.getMaxLoad());
         Helper.printAllGoods(trader.getPurchasedGoods());
+        sellGoods(trader);
     }
 
 
@@ -103,26 +101,14 @@ public class Application {
         }
     }
 
-    private static void getWorseGoodIfRain(List<Goods> goods) {
-        Random rnd = new Random();
-        double chanceOfRain = 0.3;
-        if (rnd.nextDouble() < chanceOfRain) {
-            goods.get(rnd.nextInt(goods.size())).decreaseQuality();
-            Helper.print("Дождь испортил товар.");
+    private static void sellGoods(Trader trader) {
+        Helper.print("-".repeat(90));
+        for (Goods good : trader.getPurchasedGoods()) {
+            trader.sell(good);
+            Helper.print("Продан товар: " + good);
+            Helper.print("На сумму: %.2f%n", good.getFinalPrice());
+            Helper.print("-".repeat(90));
         }
+        Helper.print("Итоговая прибыль: %.2f%n", trader.getMany());
     }
-
-    private static void deleteBestGoodIfBandits(List<Goods> goods) {
-        Comparator<Goods> cmp = Comparator.comparingDouble(Goods::getRateFromQuality).thenComparingInt(Goods::getPriceOfPurchase);
-        Goods best = Collections.max(goods, cmp);
-        Helper.print("Лучший товар - " + best);
-        goods.remove(best);
-    }
-
-    private static void getWorseGood(List<Goods> goods) {
-        Random rnd = new Random();
-        goods.get(rnd.nextInt(goods.size())).decreaseQuality();
-        Helper.print("Случайно испортился один из товаров. Это печально.");
-    }
-
 }

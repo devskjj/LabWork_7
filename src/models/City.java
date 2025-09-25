@@ -10,27 +10,19 @@ public class City {
     private int distance;
 
     public City() {
-        this.name = getCities().get(Helper.getRandom(0,getCities().size()-1));
-        this.distance = Helper.getRandom(50,100);
+        this.name = getCities().get(Helper.getRandom(0, getCities().size() - 1));
+        this.distance = Helper.getRandom(15, 40);
     }
-
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
-    private List<String> getCities(){
+    private List<String> getCities() {
         List<String> city = new ArrayList<>();
         city.add("Bishkek");
         city.add("Moscow");

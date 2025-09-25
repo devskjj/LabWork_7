@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Trader {
-   private int maxLoad;
-   private int speedDay;
-   private double many;
-   private List<Goods> purchasedGoods;
-   private final int  baseSpeedDay = 3;
+    private int maxLoad;
+    private int speedDay;
+    private double many;
+    private List<Goods> purchasedGoods;
+    private final int baseSpeedDay = 3;
 
-    public Trader(int maxLoad) {
-        this.maxLoad = maxLoad;
+    public Trader() {
+        this.maxLoad = Helper.getRandom(500, 700);
         this.speedDay = baseSpeedDay;
-        this.many = Helper.getRandom(400,1000);
+        this.many = Helper.getRandom(400, 1000);
         this.purchasedGoods = new ArrayList<>();
     }
 
@@ -29,6 +29,10 @@ public class Trader {
             maxLoad -= good.getWeight();
             purchasedGoods.add(good);
         }
+    }
+
+    public void sell(Goods good) {
+        this.many += good.getFinalPrice();
     }
 
     public List<Goods> getPurchasedGoods() {
@@ -57,9 +61,5 @@ public class Trader {
 
     public void setMany(double many) {
         this.many = many;
-    }
-
-    public void resetSpeedDay() {
-        this.speedDay =  baseSpeedDay;
     }
 }

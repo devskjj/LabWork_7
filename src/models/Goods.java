@@ -54,20 +54,4 @@ public class Goods {
     public int getWeight() {
         return weight;
     }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
-    public Types getType() {
-        return type;
-    }
-
-    public void setType(Types type) {
-        this.type = type;
-    }
-
-    public void setPriceOfPurchase(int priceOfPurchase) {
-        this.priceOfPurchase = priceOfPurchase;
-    }
 }

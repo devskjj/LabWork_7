@@ -52,6 +52,4 @@ public enum Quality {
     }
 
     public abstract void decreaseQuality(Goods good);
-
-
 }
