@@ -73,7 +73,9 @@ public class Trader {
         if (goodLoss <= 0) return 0;
         purchasedGoods.sort(Comparator.comparingDouble(Goods::getFinalPrice));
         double loss = 0;
-        for (int i = 0; i < (int) goodLoss && i < purchasedGoods.size(); i++) {
+        int count = (int) Math.ceil(goodLoss);
+
+        for (int i = 0; i < count && i < purchasedGoods.size(); i++) {
             loss += purchasedGoods.get(purchasedGoods.size() - 1 - i).getFinalPrice();
         }
         return loss;
