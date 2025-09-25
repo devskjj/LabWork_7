@@ -10,10 +10,11 @@ public class Trader {
    private int speedDay;
    private int many;
    private List<Goods> purchasedGoods;
+   private final int  baseSpeedDay = 3;
 
     public Trader(int maxLoad) {
         this.maxLoad = maxLoad;
-        this.speedDay = 3;
+        this.speedDay = baseSpeedDay;
         this.many = Helper.getRandom(400,1000);
         this.purchasedGoods = new ArrayList<>();
     }
@@ -56,5 +57,9 @@ public class Trader {
 
     public void setMany(int many) {
         this.many = many;
+    }
+
+    public void resetSpeedDay() {
+        this.speedDay =  baseSpeedDay;
     }
 }

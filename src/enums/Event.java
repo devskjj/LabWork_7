@@ -23,13 +23,15 @@ public enum Event {
         public void consequenceOfEvents(Trader trader) {
             Helper.print("Событие: " + Event.RAIN.value);
             Random rnd = new Random();
-            double chanceOfRain = 0.3;
-            if (rnd.nextDouble() < chanceOfRain) {
-                trader.setSpeedDay(trader.getSpeedDay() - 2);
+            Helper.print("Скорость снижается на 2.");
+            trader.setSpeedDay(Math.max(trader.getSpeedDay() - 2, 0));
+
+            double chance = 0.3;
+            if (rnd.nextDouble() < chance && !trader.getPurchasedGoods().isEmpty()) {
                 trader.getPurchasedGoods().get(rnd.nextInt(trader.getPurchasedGoods().size())).decreaseQuality();
                 Helper.print("Дождь испортил товар.");
             } else {
-                Helper.print("К счастью дождя не было");
+                Helper.print("К счастью товар не испортился.");
             }
         }
     },
@@ -46,14 +48,16 @@ public enum Event {
         @Override
         public void consequenceOfEvents(Trader trader) {
             Helper.print("Событие: " + Event.WHEEL_BROKE.value);
-            // Как сделать день в пустую
+            Helper.print("Колесо сломалось, день потерян.");
+            trader.setSpeedDay(0);
         }
     },
     RIVER("Река") {
         @Override
         public void consequenceOfEvents(Trader trader) {
             Helper.print("Событие: " + Event.RIVER.value);
-            // Как сделать день в пустую
+            Helper.print("Потратил целый день пока искал дорогу.");
+            trader.setSpeedDay(0);
         }
     },
     MET_LOCAL("Встретил местного") {
@@ -71,12 +75,14 @@ public enum Event {
                 int stolenMoney = trader.getMany();
                 trader.setMany(0);
                 Helper.print("У торговца украли деньги: " + stolenMoney);
-            } else {
+            } else if (!trader.getPurchasedGoods().isEmpty()) { // может упасть ошибка если список пустой
                 Helper.print("Денег нет, разбойники забирают лучший товар.");
                 Comparator<Goods> cmp = Comparator.comparingDouble(Goods::getRateFromQuality).thenComparingInt(Goods::getPriceOfPurchase);
                 Goods best = Collections.max(trader.getPurchasedGoods(), cmp);
                 Helper.print("Лучший товар - " + best);
                 trader.getPurchasedGoods().remove(best);
+            } else {
+                Helper.print("У торговца нет ни денег, ни товаров. Разбойники ушли ни с чем.");
             }
         }
     },
@@ -91,8 +97,11 @@ public enum Event {
         @Override
         public void consequenceOfEvents(Trader trader) {
             Helper.print("Событие: " + Event.PRODUCT_DETERIORATED.value);
-            trader.getPurchasedGoods().get(Helper.getRandom(trader.getPurchasedGoods().size() - 1)).decreaseQuality();
-
+            if (!trader.getPurchasedGoods().isEmpty()) {
+                trader.getPurchasedGoods().get(Helper.getRandom(trader.getPurchasedGoods().size() - 1)).decreaseQuality();
+            } else {
+                Helper.print("Нет товаров, которые могли бы испортиться.");
+            }
         }
     };
 

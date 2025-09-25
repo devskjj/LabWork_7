@@ -1,5 +1,6 @@
 import enums.Event;
 import helper.Helper;
+import models.City;
 import models.Goods;
 import models.Trader;
 import org.w3c.dom.ls.LSOutput;
@@ -13,10 +14,47 @@ public class Application {
 
         initializeBuyingProcess(goods, trader);
 
-        Event.values()[Helper.getRandom(Event.values().length - 1)].consequenceOfEvents(trader);
+//        Event.values()[Helper.getRandom(Event.values().length - 1)].consequenceOfEvents(trader);
 
-        print("Все что осталось после событий");
-        print("Денег: " + trader.getMany());
+
+        City startCity = new City();
+        City destinationCity = new City();
+        while (destinationCity.getName().equals(startCity.getName())) {
+            destinationCity = new City();
+        }
+        System.out.println("=== Start ===");
+        System.out.println("Start city: " + startCity.getName());
+        System.out.println("End city: " + destinationCity.getName());
+        System.out.println("Distance: " + destinationCity.getDistance() + " lig");
+        System.out.println("Start goods:");
+        printAllGoods(trader.getPurchasedGoods());
+        int distanceRemaining = destinationCity.getDistance();
+
+        while (distanceRemaining > 0) {
+            System.out.println("New day");
+            Event randomEvent = Event.values()[Helper.getRandom(Event.values().length - 1)];
+            randomEvent.consequenceOfEvents(trader);
+            if (trader.getSpeedDay() > 0) {
+                distanceRemaining -= trader.getSpeedDay();
+                if (distanceRemaining < 0) distanceRemaining = 0;
+            }
+
+            System.out.println("Speed: " + trader.getSpeedDay() + " lig/day");
+            System.out.println("go left: " + distanceRemaining + " lig");
+            print("Денег осталось: " + trader.getMany());
+            print("Место в телеге осталось: " + trader.getMaxLoad());
+            System.out.println("Goods:");
+            printAllGoods(trader.getPurchasedGoods());
+
+            if (trader.getSpeedDay() == 0) {
+                trader.resetSpeedDay();
+            }
+        }
+        System.out.println("The merchant reached the city: " + destinationCity.
+                getName());
+        System.out.println("Goods at the finish: ");
+        print("Денег осталось: " + trader.getMany());
+        print("Место в телеге осталось: " + trader.getMaxLoad());
         printAllGoods(trader.getPurchasedGoods());
     }
 
