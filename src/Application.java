@@ -32,7 +32,6 @@ public class Application {
             Helper.print("-------");
             trader.setSpeedDay(3);
             Event randomEvent = Event.values()[Helper.getRandom(Event.values().length - 1)];
-            randomEvent.consequenceOfEvents(trader);
 
             if (randomEvent == Event.MET_LOCAL) {
                 int bonus = Helper.getRandom(3, 6);
@@ -103,12 +102,15 @@ public class Application {
 
     private static void sellGoods(Trader trader) {
         Helper.print("-".repeat(90));
+        double profit = 0;
         for (Goods good : trader.getPurchasedGoods()) {
             trader.sell(good);
             Helper.print("Продан товар: " + good);
             Helper.print("На сумму: %.2f%n", good.getFinalPrice());
+            profit+=good.getPriceOfPurchase();
             Helper.print("-".repeat(90));
         }
-        Helper.print("Итоговая прибыль: %.2f%n", trader.getMany());
+        Helper.print("Итоговая прибыль: %.2f", profit);
+        Helper.print("Итого денег у торговца: %.2f", profit+trader.getMany());
     }
 }

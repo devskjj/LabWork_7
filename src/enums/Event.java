@@ -2,6 +2,7 @@ package enums;
 
 import helper.Helper;
 import models.Goods;
+import models.RoadsideTavern;
 import models.Trader;
 
 import java.util.*;

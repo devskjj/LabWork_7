@@ -31,8 +31,8 @@ public class Trader {
         }
     }
 
-    public void sell(Goods good) {
-        this.many += good.getFinalPrice();
+    public double sell(Goods good) {
+        return good.getFinalPrice();
     }
 
     public List<Goods> getPurchasedGoods() {
