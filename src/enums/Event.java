@@ -14,7 +14,6 @@ public enum Event {
         @Override
         public void consequenceOfEvents(Trader trader) {
             Helper.print("Событие: " + Event.NORMAL_DAY.value);
-            trader.setSpeedDay(3);
             Helper.print("Ничего не произошло");
         }
     },
