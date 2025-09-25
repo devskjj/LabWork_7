@@ -35,8 +35,6 @@ public class RoadsideTavern {
 
         Map<String, Runnable> actions = new HashMap<>();
 
-        actions.put("0", payCostOfInn);
-
         actions.put("1", new Runnable() {
             @Override
             public void run() {
@@ -88,12 +86,15 @@ public class RoadsideTavern {
             Helper.print("Хотите продать/купить товар?");
             Helper.print("1 - Продать");
             Helper.print("2 - Купить");
-            Helper.print("0 - Выйти (оплатить ночлег и завершить день)");
+            Helper.print("0 - Нет (оплатить ночлег и завершить день)");
             Helper.print("----------------------------");
 
             String choice = scanner.nextLine().trim();
-            Runnable action = actions.get(choice);
+            if (choice.equals("0")) {
+                break;
+            }
 
+            Runnable action = actions.get(choice);
             if (action != null) {
                 action.run();
                 break;
