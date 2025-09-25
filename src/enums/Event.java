@@ -56,7 +56,7 @@ public enum Event {
         @Override
         public void consequenceOfEvents(Trader trader) {
             Helper.print("Событие: " + Event.RIVER.value);
-            Helper.print("Потратил целый день пока искал дорогу.");
+            Helper.print("Потратил целый день пока искал брод.");
             trader.setSpeedDay(0);
         }
     },
@@ -64,7 +64,7 @@ public enum Event {
         @Override
         public void consequenceOfEvents(Trader trader) {
             Helper.print("Событие: " + Event.MET_LOCAL.value);
-            // тут мне нужно растояние
+            Helper.print("В этот день удалось срезать часть пути.");
         }
     },
     BANDITS("Разбойники большой дороги") {

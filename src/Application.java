@@ -32,8 +32,17 @@ public class Application {
 
         while (distanceRemaining > 0) {
             System.out.println("New day");
+            System.out.println("-------");
+            trader.setSpeedDay(3);
             Event randomEvent = Event.values()[Helper.getRandom(Event.values().length - 1)];
             randomEvent.consequenceOfEvents(trader);
+
+            if (randomEvent == Event.MET_LOCAL) {
+                int bonus = Helper.getRandom(3, 6);
+                distanceRemaining -= bonus;
+                Helper.print("Местный подсказал короткий путь. Пройдено дополнительно " + bonus + " лиг.");
+            }
+
             if (trader.getSpeedDay() > 0) {
                 distanceRemaining -= trader.getSpeedDay();
                 if (distanceRemaining < 0) distanceRemaining = 0;
@@ -45,10 +54,6 @@ public class Application {
             print("Место в телеге осталось: " + trader.getMaxLoad());
             System.out.println("Goods:");
             printAllGoods(trader.getPurchasedGoods());
-
-            if (trader.getSpeedDay() == 0) {
-                trader.resetSpeedDay();
-            }
         }
         System.out.println("The merchant reached the city: " + destinationCity.
                 getName());
