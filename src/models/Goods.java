@@ -6,10 +6,10 @@ import enums.Types;
 import java.util.Random;
 
 public class Goods {
-    private int weight;
-    private Types type;
+    private final int weight;
+    private final Types type;
     private Quality quality;
-    private int priceOfPurchase;
+    private final int priceOfPurchase;
 
     public Goods() {
         Random rnd = new Random();
@@ -55,19 +55,7 @@ public class Goods {
         return weight;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
     public Types getType() {
         return type;
-    }
-
-    public void setType(Types type) {
-        this.type = type;
-    }
-
-    public void setPriceOfPurchase(int priceOfPurchase) {
-        this.priceOfPurchase = priceOfPurchase;
     }
 }

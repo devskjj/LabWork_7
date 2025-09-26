@@ -7,23 +7,7 @@ import java.util.*;
 public class RoadsideTavern {
     public static void runRoadsideTavernEvent(Trader trader) {
         Scanner scanner = new Scanner(System.in);
-
-        Helper.print("Остановиться в трактире? (Y/N): ");
-        String answer = scanner.nextLine().trim().toLowerCase();
-        while (!answer.equals("y") && !answer.equals("n")) {
-            Helper.print("Некорректный ввод. Введите Y/N: ");
-            answer = scanner.nextLine().trim().toLowerCase();
-        }
-
-        if (answer.equalsIgnoreCase("N")) {
-            Helper.print("Вы решили не останавливаться и продолжаете путь.");
-            trader.setSpeedDay(3);
-            return;
-        }
-        if (answer.equalsIgnoreCase("Y")) {
-            Helper.print("Вы останавливаетесь в трактире.");
-            trader.setSpeedDay(0);
-        }
+        if (chooseStayOrNot(trader, scanner)) return;
 
         Runnable payCostOfInn = new Runnable() {
             public void run() {
@@ -34,7 +18,6 @@ public class RoadsideTavern {
         };
 
         Map<String, Runnable> actions = new HashMap<>();
-
         actions.put("1", new Runnable() {
             @Override
             public void run() {
@@ -75,7 +58,31 @@ public class RoadsideTavern {
                 Helper.printAllGoods(trader.getPurchasedGoods());
             }
         });
+        runMenuAndAction(trader, scanner, actions);
+        payCostOfInn.run();
+    }
 
+    private static boolean chooseStayOrNot(Trader trader, Scanner scanner) {
+        Helper.print("Остановиться в трактире? (Y/N): ");
+        String answer = scanner.nextLine().trim().toLowerCase();
+        while (!answer.equals("y") && !answer.equals("n")) {
+            Helper.print("Некорректный ввод. Введите Y/N: ");
+            answer = scanner.nextLine().trim().toLowerCase();
+        }
+
+        if (answer.equalsIgnoreCase("N")) {
+            Helper.print("Вы решили не останавливаться и продолжаете путь.");
+            trader.setSpeedDay(3);
+            return true;
+        }
+        if (answer.equalsIgnoreCase("Y")) {
+            Helper.print("Вы останавливаетесь в трактире.");
+            trader.setSpeedDay(0);
+        }
+        return false;
+    }
+
+    private static void runMenuAndAction(Trader trader, Scanner scanner, Map<String, Runnable> actions) {
         while (true) {
             Helper.print("Товары в телеге продавца: ");
             Helper.printAllGoods(trader.getPurchasedGoods());
@@ -102,6 +109,5 @@ public class RoadsideTavern {
                 Helper.print("Неверный ввод. Попробуйте снова.");
             }
         }
-        payCostOfInn.run();
     }
 }

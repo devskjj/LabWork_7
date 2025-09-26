@@ -1,6 +1,5 @@
 package enums;
 
-
 import models.Goods;
 
 public enum Quality {
@@ -52,6 +51,4 @@ public enum Quality {
     }
 
     public abstract void decreaseQuality(Goods good);
-
-
 }

@@ -18,16 +18,8 @@ public class Trader {
     private City newDestinationCity;
     private boolean changeCity;
 
-    public void setCurrentCity(City currentCity) {
-        this.currentCity = currentCity;
-    }
-
-    public City getCurrentCity() {
-        return currentCity;
-    }
-
-    public Trader(int maxLoad) {
-        this.maxLoad = maxLoad;
+    public Trader() {
+        this.maxLoad = Helper.getRandom(500, 700);
         this.speedDay = baseSpeedDay;
         this.many = Helper.getRandom(400, 1000);
         this.purchasedGoods = new ArrayList<>();
@@ -46,27 +38,31 @@ public class Trader {
         }
     }
 
-    public double sell(Goods good) {
-        return good.getFinalPrice();
+    public void sell(Goods good) {
+        good.getFinalPrice();
     }
 
     public void sellSpecialGoods(City city) {
         Set<Types> citySpecials = city.getSpecialGoods();
         List<Goods> toRemove = new ArrayList<>();
+        Helper.print("-".repeat(120));
         for (Goods good : purchasedGoods) {
             if (citySpecials.contains(good.getType())) {
                 double bonus = good.getFinalPrice() * 2;
                 setMany(getMany() + bonus);
-                Helper.print("Специализированный товар! Продано за x2: " + good + " за " + String.format("%.2f", bonus));
+                Helper.print("Специализированный товар! Продано за x2: " + good + " Продали за " + String.format("%.2f", bonus));
+                Helper.print("-".repeat(120));
             } else {
                 double price = good.getFinalPrice();
                 setMany(getMany() + price);
-                Helper.print("Обычный товар! Продано: " + good + " за " + String.format("%.2f", price));
+                Helper.print("Обычный товар! Продано: " + good + " Продали за " + String.format("%.2f", price));
+                Helper.print("-".repeat(120));
             }
             toRemove.add(good);
         }
         purchasedGoods.removeAll(toRemove);
         Helper.print("Прибыль торговца: %.2f", getMany());
+        Helper.print("Итого денег у торговца: " + String.format("%.2f", getMany()));
     }
 
     public double riskBanditsLoss(int days, double chanceOfBandits) {
@@ -147,5 +143,13 @@ public class Trader {
 
     public City getNewDestinationCity() {
         return newDestinationCity;
+    }
+
+    public void setCurrentCity(City currentCity) {
+        this.currentCity = currentCity;
+    }
+
+    public City getCurrentCity() {
+        return currentCity;
     }
 }

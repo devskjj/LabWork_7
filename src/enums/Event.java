@@ -77,6 +77,7 @@ public enum Event {
                 Goods best = Collections.max(trader.getPurchasedGoods(), cmp);
                 Helper.print("Лучший товар - " + best);
                 trader.getPurchasedGoods().remove(best);
+                trader.setMaxLoad(trader.getMaxLoad() + best.getWeight());
             } else {
                 Helper.print("У торговца нет ни денег, ни товаров. Разбойники ушли ни с чем.");
             }
@@ -111,7 +112,7 @@ public enum Event {
 
     public abstract void consequenceOfEvents(Trader trader);
 
-    String value;
+    final String value;
 
     Event(String value) {
         this.value = value;

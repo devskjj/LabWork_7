@@ -9,7 +9,7 @@ public enum Types {
     FABRICS("Ткани"),
     PAINT("Краска");
 
-    private String value;
+    private final String value;
 
     Types(String value) {
         this.value = value;

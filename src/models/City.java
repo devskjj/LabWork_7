@@ -35,17 +35,10 @@ public class City {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
     private List<String> getCities(){
         List<String> city = new ArrayList<>();
         city.add("Bishkek");

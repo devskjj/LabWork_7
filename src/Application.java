@@ -7,7 +7,7 @@ import java.util.*;
 public class Application {
     public static void runApplication() {
         List<Goods> goods = Helper.getRandomGoods(7);
-        Trader trader = new Trader(500);
+        Trader trader = new Trader();
 
         initializeBuyingProcess(goods, trader);
 
@@ -17,15 +17,11 @@ public class Application {
         while (destinationCity.getName().equals(startCity.getName())) {
             destinationCity = new City();
         }
+
         trader.setCurrentCity(startCity);
         trader.setNewDestinationCity(destinationCity);
+        printStartInfo(startCity, destinationCity, trader);
 
-        Helper.print("=== Start ===");
-        Helper.print("Start city: " + startCity.getName());
-        Helper.print("End city: " + destinationCity.getName());
-        Helper.print("Distance: " + destinationCity.getDistance() + " lig");
-        Helper.print("Start goods:");
-        Helper.printAllGoods(trader.getPurchasedGoods());
         int distanceRemaining = destinationCity.getDistance();
         int initialDistance = destinationCity.getDistance();
 
@@ -68,19 +64,37 @@ public class Application {
             Helper.print("Goods:");
             Helper.printAllGoods(trader.getPurchasedGoods());
         }
-        Helper.print("The merchant reached the city: " + destinationCity.
-                getName());
+
+        printFinishInfo(destinationCity, trader);
+        Helper.print();
+        Helper.print("Процесс продажи в городе...");
+        if (trader.getPurchasedGoods().isEmpty()) {
+            Helper.print("Поторговать не удалось, так как у вас нет товаров.");
+            Helper.print("Итого денег у торговца: " + String.format("%.2f", trader.getMany()));
+        } else {
+            if (trader.isChangeCity()) {
+                trader.sellSpecialGoods(destinationCity);
+            } else {
+                sellGoods(trader);
+            }
+        }
+    }
+
+    private static void printStartInfo(City startCity, City destinationCity, Trader trader) {
+        Helper.print("=== Start ===");
+        Helper.print("Start city: " + startCity.getName());
+        Helper.print("End city: " + destinationCity.getName());
+        Helper.print("Distance: " + destinationCity.getDistance() + " lig");
+        Helper.print("Start goods:");
+        Helper.printAllGoods(trader.getPurchasedGoods());
+    }
+
+    private static void printFinishInfo(City destinationCity, Trader trader) {
+        Helper.print("The merchant reached the city: " + destinationCity.getName());
         Helper.print("Goods at the finish: ");
         Helper.print("Денег осталось: " + trader.getMany());
         Helper.print("Место в телеге осталось: " + trader.getMaxLoad());
         Helper.printAllGoods(trader.getPurchasedGoods());
-
-        Helper.print("Процесс продажи в городе...");
-        if (trader.isChangeCity()) {
-            trader.sellSpecialGoods(destinationCity);
-        } else {
-            sellGoods(trader);
-        }
     }
 
     private static void initializeBuyingProcess(List<Goods> goods, Trader trader) {
@@ -124,12 +138,12 @@ public class Application {
         for (Goods good : trader.getPurchasedGoods()) {
             trader.sell(good);
             Helper.print("Продан товар: " + good);
-            Helper.print("На сумму: %.2f%n", good.getFinalPrice());
+            Helper.print("Стоимость продажи в городе: " + String.format("%.2f", good.getFinalPrice()));
             profit += good.getFinalPrice();
             Helper.print("-".repeat(90));
         }
         trader.setMany(trader.getMany() + profit);
-        Helper.print("Итоговая прибыль: %.2f", profit);
-        Helper.print("Итого денег у торговца: %.2f", trader.getMany());
+        Helper.print("Итоговая прибыль: " + String.format("%.2f", profit));
+        Helper.print("Итого денег у торговца: " + String.format("%.2f", trader.getMany()));
     }
 }
