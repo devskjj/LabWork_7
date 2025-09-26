@@ -11,9 +11,6 @@ public class Application {
 
         initializeBuyingProcess(goods, trader);
 
-//        Event.values()[Helper.getRandom(Event.values().length - 1)].consequenceOfEvents(trader);
-
-
         City startCity = new City();
         City destinationCity = new City();
 
@@ -61,7 +58,6 @@ public class Application {
                 }
             }
 
-
             if (trader.getSpeedDay() > 0) {
                 distanceRemaining -= trader.getSpeedDay();
                 if (distanceRemaining < 0) distanceRemaining = 0;
@@ -80,6 +76,28 @@ public class Application {
         Helper.print("Денег осталось: " + trader.getMany());
         Helper.print("Место в телеге осталось: " + trader.getMaxLoad());
         Helper.printAllGoods(trader.getPurchasedGoods());
+        System.out.println("---------- продажа");
+
+        if (trader.isChangeCity()) {
+            trader.sellSpecialGoods(destinationCity);
+        } else {
+            sellGoods(trader);
+        }
+    }
+
+    private static void sellGoods(Trader trader) {
+        Helper.print("-".repeat(90));
+        double profit = 0;
+        for (Goods good : trader.getPurchasedGoods()) {
+            trader.sell(good);
+            Helper.print("Продан товар: " + good);
+            Helper.print("На сумму: %.2f%n", good.getFinalPrice());
+            profit += good.getFinalPrice();
+            Helper.print("-".repeat(90));
+        }
+        trader.setMany(trader.getMany() + profit);
+        Helper.print("Итоговая прибыль: %.2f", profit);
+        Helper.print("Итого денег у торговца: %.2f", trader.getMany());
     }
 
 
@@ -139,5 +157,4 @@ public class Application {
         goods.get(rnd.nextInt(goods.size())).decreaseQuality();
         Helper.print("Случайно испортился один из товаров. Это печально.");
     }
-
 }

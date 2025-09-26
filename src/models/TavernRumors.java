@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TavernRumors {
-
     public static void showInfo(Trader trader, int distanceRemaining, int distanceTraveled) {
         List<Types> traderTypes = getTypesFromListGoodsOfTrader(trader);
         if (traderTypes.isEmpty()) {
@@ -41,8 +40,6 @@ public class TavernRumors {
         }
         String goodsStr = sb.toString();
 
-
-
         Helper.print("В таверне дошел слух, что в городе " + newCity.getName() +
                 " покупают по высоким ценам товар: " + goodsStr);
         calculateAndPrintRiskInfo(trader, distanceRemaining, newCity, distanceTraveled);
@@ -67,7 +64,6 @@ public class TavernRumors {
             }
         }
     }
-
 
     private static void calculateAndPrintRiskInfo(Trader trader, int distanceRemaining, City newCity, int distanceTraveled) {
         int baseSpeed = trader.getSpeedDay();
@@ -101,7 +97,6 @@ public class TavernRumors {
         Helper.print("Возможные убытки: " + String.format("%.2f", goodsPriceLossNew));
         Helper.print("Ожидаемая прибыль в итоге: " + String.format("%.2f", totalNew));
     }
-
 
     private static List<Types> getTypesFromListGoodsOfTrader(Trader trader) {
         List<Types> uniqueTypes = new ArrayList<>();

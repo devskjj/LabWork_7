@@ -46,17 +46,24 @@ public class Trader {
         }
     }
 
+    public double sell(Goods good) {
+        return good.getFinalPrice();
+    }
+
     public void sellSpecialGoods(City city) {          // метод для продажи в конце если торговец поменял город
         Set<Types> citySpecials = city.getSpecialGoods();
         List<Goods> toRemove = new ArrayList<>();
-
         for (Goods good : purchasedGoods) {
             if (citySpecials.contains(good.getType())) {
                 double bonus = good.getFinalPrice() * 2;
                 setMany(getMany() + bonus);
                 Helper.print("Специализированный товар! Продано за x2: " + good + " за " + String.format("%.2f", bonus));
-                toRemove.add(good);
+            } else {
+                double price = good.getFinalPrice();
+                setMany(getMany() + price);
+                Helper.print("Обычный товар! Продано: " + good + " за " + String.format("%.2f", price));
             }
+            toRemove.add(good);
         }
         purchasedGoods.removeAll(toRemove);
         Helper.print("Прибыль торговца: %.2f", getMany());
@@ -93,7 +100,6 @@ public class Trader {
         }
         return profit;
     }
-
 
     public List<Goods> getPurchasedGoods() {
         return purchasedGoods;
