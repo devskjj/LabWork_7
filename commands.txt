@@ -1,5 +1,5 @@
 1) Create remote repo
-2) Add collabarators
+2) Add collaborators
 3) Git clone
 4) Git status
 5) Git add
