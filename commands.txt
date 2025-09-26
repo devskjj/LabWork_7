@@ -7,4 +7,5 @@
 7) Git push
 8) Git merge
 9) Git pull
-10) Git merge and push into master
+10) Git checkout of branches
+11) Git merge and push into master
