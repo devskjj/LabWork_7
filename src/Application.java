@@ -59,7 +59,7 @@ public class Application {
 
             Helper.print("Speed: " + trader.getSpeedDay() + " lig/day");
             Helper.print("go left: " + distanceRemaining + " lig");
-            Helper.print("Денег осталось: " + trader.getMany());
+            Helper.print("Денег осталось: " + trader.getMoney());
             Helper.print("Место в телеге осталось: " + trader.getMaxLoad());
             Helper.print("Goods:");
             Helper.printAllGoods(trader.getPurchasedGoods());
@@ -70,7 +70,7 @@ public class Application {
         Helper.print("Процесс продажи в городе...");
         if (trader.getPurchasedGoods().isEmpty()) {
             Helper.print("Поторговать не удалось, так как у вас нет товаров.");
-            Helper.print("Итого денег у торговца: " + String.format("%.2f", trader.getMany()));
+            Helper.print("Итого денег у торговца: " + String.format("%.2f", trader.getMoney()));
         } else {
             if (trader.isChangeCity()) {
                 trader.sellSpecialGoods(destinationCity);
@@ -92,7 +92,7 @@ public class Application {
     private static void printFinishInfo(City destinationCity, Trader trader) {
         Helper.print("The merchant reached the city: " + destinationCity.getName());
         Helper.print("Goods at the finish: ");
-        Helper.print("Денег осталось: " + trader.getMany());
+        Helper.print("Денег осталось: " + trader.getMoney());
         Helper.print("Место в телеге осталось: " + trader.getMaxLoad());
         Helper.printAllGoods(trader.getPurchasedGoods());
     }
@@ -102,7 +102,7 @@ public class Application {
         Helper.printAllGoods(goods);
         Helper.print();
 
-        Helper.print("Денег у торговца: " + trader.getMany());
+        Helper.print("Денег у торговца: " + trader.getMoney());
         Helper.print("Грузоподъемность телеги: " + trader.getMaxLoad());
         Helper.print();
 
@@ -110,7 +110,7 @@ public class Application {
         buyGoods(goods, trader);
         Helper.print();
 
-        Helper.print("Денег осталось: " + trader.getMany());
+        Helper.print("Денег осталось: " + trader.getMoney());
         Helper.print("Место в телеге осталось: " + trader.getMaxLoad());
         Helper.print();
 
@@ -142,8 +142,8 @@ public class Application {
             profit += good.getFinalPrice();
             Helper.print("-".repeat(90));
         }
-        trader.setMany(trader.getMany() + profit);
+        trader.setMoney(trader.getMoney() + profit);
         Helper.print("Итоговая прибыль: " + String.format("%.2f", profit));
-        Helper.print("Итого денег у торговца: " + String.format("%.2f", trader.getMany()));
+        Helper.print("Итого денег у торговца: " + String.format("%.2f", trader.getMoney()));
     }
 }

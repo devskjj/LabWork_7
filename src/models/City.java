@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Set;
 
 public class City {
-    private String name;
-    private int distance;
+    private final String name;
+    private final int distance;
     private Set<Types> specialGoods;
 
     public City() {
-        this.name = getCities().get(Helper.getRandom(0,getCities().size()-1));
-        this.distance = Helper.getRandom(50,100);
+        this.name = getCities().get(Helper.getRandom(0, getCities().size() - 1));
+        this.distance = Helper.getRandom(50, 100);
         this.specialGoods = getSpecialGoods();
     }
 
@@ -23,7 +23,7 @@ public class City {
         Types[] types = Types.values();
         if (specialGoods == null) {
             specialGoods = new HashSet<>();
-            int counter = Helper.getRandom(1,3);
+            int counter = Helper.getRandom(1, 3);
             while (specialGoods.size() < counter) {
                 specialGoods.add(types[Helper.getRandom(types.length - 1)]);
             }
@@ -39,7 +39,7 @@ public class City {
         return distance;
     }
 
-    private List<String> getCities(){
+    private List<String> getCities() {
         List<String> city = new ArrayList<>();
         city.add("Bishkek");
         city.add("Moscow");

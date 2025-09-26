@@ -11,9 +11,9 @@ public class RoadsideTavern {
 
         Runnable payCostOfInn = new Runnable() {
             public void run() {
-                double costs = trader.getMany() * 0.2;
-                trader.setMany(trader.getMany() - costs);
-                Helper.print("Траты на еду и ночлег: " + costs + ". Осталось денег: " + trader.getMany());
+                double costs = trader.getMoney() * 0.2;
+                trader.setMoney(trader.getMoney() - costs);
+                Helper.print("Траты на еду и ночлег: " + costs + ". Осталось денег: " + trader.getMoney());
             }
         };
 
@@ -28,7 +28,7 @@ public class RoadsideTavern {
                     Goods soldGood = trader.getPurchasedGoods().remove(i);
                     double price = soldGood.getFinalPrice();
                     Helper.print("Продан товар: " + soldGood + " за " + price);
-                    trader.setMany(trader.getMany() + price);
+                    trader.setMoney(trader.getMoney() + price);
                     trader.setMaxLoad(trader.getMaxLoad() + soldGood.getWeight());
                 }
             }
@@ -43,16 +43,17 @@ public class RoadsideTavern {
                 int countGoods = trader.getPurchasedGoods().size();
                 Helper.print("Попытка купить товар");
 
-                for (int i = 0; i < newGoods.size(); i++) {
-                    if (trader.isEnoughToBuy(newGoods.get(i))) {
-                        trader.buy(newGoods.get(i));
+                for (Goods newGood : newGoods) {
+                    if (trader.isEnoughToBuy(newGood)) {
+                        trader.buy(newGood);
                         Helper.print("Товар успешно куплен!");
-                        Helper.print(newGoods.get(i).toString());
+                        Helper.print(newGood.toString());
                     }
 
-                }if(countGoods==trader.getPurchasedGoods().size()){
+                }
+                if (countGoods == trader.getPurchasedGoods().size()) {
                     Helper.print("Не удалось купить товар: недостаточно денег или места.");
-                    Helper.print("Денег осталось: " + trader.getMany());
+                    Helper.print("Денег осталось: " + trader.getMoney());
                     Helper.print("Место в телеге осталось: " + trader.getMaxLoad());
                 }
 
@@ -89,7 +90,7 @@ public class RoadsideTavern {
         while (true) {
             Helper.print("Товары в телеге продавца: ");
             Helper.printAllGoods(trader.getPurchasedGoods());
-            Helper.print("Денег осталось: " + trader.getMany());
+            Helper.print("Денег осталось: " + trader.getMoney());
             Helper.print("Место в телеге осталось: " + trader.getMaxLoad());
             Helper.print("Купить/Продать товар можно 1 раз случайным образом.");
             Helper.print("----------------------------");

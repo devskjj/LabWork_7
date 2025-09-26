@@ -49,8 +49,14 @@ public class TavernRumors {
 
         while (true) {
             Helper.print("Хотите ли вы изменить маршрут на " + newCity.getName() + "? (Y/N): ");
-            answer = scanner.nextLine().trim().toLowerCase();
+            answer = scanner.nextLine();
 
+            if (answer == null) {
+                Helper.print("Ошибка ввода. Пожалуйста, повторите попытку.");
+                continue;
+            }
+
+            answer = answer.trim().toLowerCase();
             if (answer.equals("y")) {
                 Helper.print("Маршрут изменен на город " + newCity.getName());
                 trader.setNewDestinationCity(newCity);

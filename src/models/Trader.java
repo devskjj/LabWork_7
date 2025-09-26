@@ -11,7 +11,7 @@ import java.util.Set;
 public class Trader {
     private int maxLoad;
     private int speedDay;
-    private double many;
+    private double money;
     private List<Goods> purchasedGoods;
     private final int baseSpeedDay = 3;
     private City currentCity;
@@ -21,18 +21,18 @@ public class Trader {
     public Trader() {
         this.maxLoad = Helper.getRandom(500, 700);
         this.speedDay = baseSpeedDay;
-        this.many = Helper.getRandom(400, 1000);
+        this.money = Helper.getRandom(400, 1000);
         this.purchasedGoods = new ArrayList<>();
         this.changeCity = false;
     }
 
     public boolean isEnoughToBuy(Goods good) {
-        return maxLoad >= good.getWeight() && many >= good.getPriceOfPurchase();
+        return maxLoad >= good.getWeight() && money >= good.getPriceOfPurchase();
     }
 
     public void buy(Goods good) {
         if (isEnoughToBuy(good)) {
-            many -= good.getPriceOfPurchase();
+            money -= good.getPriceOfPurchase();
             maxLoad -= good.getWeight();
             purchasedGoods.add(good);
         }
@@ -49,20 +49,20 @@ public class Trader {
         for (Goods good : purchasedGoods) {
             if (citySpecials.contains(good.getType())) {
                 double bonus = good.getFinalPrice() * 2;
-                setMany(getMany() + bonus);
+                setMoney(getMoney() + bonus);
                 Helper.print("Специализированный товар! Продано за x2: " + good + " Продали за " + String.format("%.2f", bonus));
                 Helper.print("-".repeat(120));
             } else {
                 double price = good.getFinalPrice();
-                setMany(getMany() + price);
+                setMoney(getMoney() + price);
                 Helper.print("Обычный товар! Продано: " + good + " Продали за " + String.format("%.2f", price));
                 Helper.print("-".repeat(120));
             }
             toRemove.add(good);
         }
         purchasedGoods.removeAll(toRemove);
-        Helper.print("Прибыль торговца: %.2f", getMany());
-        Helper.print("Итого денег у торговца: " + String.format("%.2f", getMany()));
+        Helper.print("Прибыль торговца: %.2f", getMoney());
+        Helper.print("Итого денег у торговца: " + String.format("%.2f", getMoney()));
     }
 
     public double riskBanditsLoss(int days, double chanceOfBandits) {
@@ -117,12 +117,12 @@ public class Trader {
         this.speedDay = speedDay;
     }
 
-    public double getMany() {
-        return many;
+    public double getMoney() {
+        return money;
     }
 
-    public void setMany(double many) {
-        this.many = many;
+    public void setMoney(double money) {
+        this.money = money;
     }
 
     public void resetSpeedDay() {

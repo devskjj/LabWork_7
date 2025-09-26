@@ -2,7 +2,6 @@ package enums;
 
 import helper.Helper;
 import models.Goods;
-import models.RoadsideTavern;
 import models.Trader;
 
 import java.util.*;
@@ -68,9 +67,9 @@ public enum Event {
         @Override
         public void consequenceOfEvents(Trader trader) {
             Helper.print("Событие: " + Event.BANDITS.value);
-            if (trader.getMany() > 0) {
-                double stolenMoney = trader.getMany();
-                trader.setMany(0);
+            if (trader.getMoney() > 0) {
+                double stolenMoney = trader.getMoney();
+                trader.setMoney(0);
                 Helper.print("У торговца украли деньги: " + stolenMoney);
             } else if (!trader.getPurchasedGoods().isEmpty()) {
                 Helper.print("Денег нет, разбойники забирают лучший товар.");
@@ -107,7 +106,6 @@ public enum Event {
             if (!trader.isChangeCity()) {
                 Helper.print("Событие: " + Event.TAVERN_RUMORS.value);
             }
-
         }
     };
 
