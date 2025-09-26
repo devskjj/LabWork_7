@@ -65,13 +65,13 @@ public enum Event {
     },
     BANDITS("Разбойники большой дороги") {
         @Override
-        public void consequenceOfEvents(Trader trader) {  // добавил что бы могли или деньги забрать или товар как по условию тз
+        public void consequenceOfEvents(Trader trader) {
             Helper.print("Событие: " + Event.BANDITS.value);
             if (trader.getMany() > 0) {
                 double stolenMoney = trader.getMany();
                 trader.setMany(0);
                 Helper.print("У торговца украли деньги: " + stolenMoney);
-            } else if (!trader.getPurchasedGoods().isEmpty()) { // может упасть ошибка если список пустой
+            } else if (!trader.getPurchasedGoods().isEmpty()) {
                 Helper.print("Денег нет, разбойники забирают лучший товар.");
                 Comparator<Goods> cmp = Comparator.comparingDouble(Goods::getRateFromQuality).thenComparingInt(Goods::getPriceOfPurchase);
                 Goods best = Collections.max(trader.getPurchasedGoods(), cmp);

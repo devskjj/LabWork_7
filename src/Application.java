@@ -50,11 +50,9 @@ public class Application {
                 int distanceTraveled = initialDistance - distanceRemaining;
                 TavernRumors.showInfo(trader, distanceRemaining, distanceTraveled);
                 if (trader.isChangeCity()) {
-
                     initialDistance = trader.getNewDestinationCity().getDistance();
                     distanceRemaining = (distanceTraveled / 4) + (trader.getNewDestinationCity().getDistance() * 2 / 3);
                     destinationCity = trader.getNewDestinationCity();
-
                 }
             }
 
@@ -76,30 +74,14 @@ public class Application {
         Helper.print("Денег осталось: " + trader.getMany());
         Helper.print("Место в телеге осталось: " + trader.getMaxLoad());
         Helper.printAllGoods(trader.getPurchasedGoods());
-        System.out.println("---------- продажа");
 
+        Helper.print("Процесс продажи в городе...");
         if (trader.isChangeCity()) {
             trader.sellSpecialGoods(destinationCity);
         } else {
             sellGoods(trader);
         }
     }
-
-    private static void sellGoods(Trader trader) {
-        Helper.print("-".repeat(90));
-        double profit = 0;
-        for (Goods good : trader.getPurchasedGoods()) {
-            trader.sell(good);
-            Helper.print("Продан товар: " + good);
-            Helper.print("На сумму: %.2f%n", good.getFinalPrice());
-            profit += good.getFinalPrice();
-            Helper.print("-".repeat(90));
-        }
-        trader.setMany(trader.getMany() + profit);
-        Helper.print("Итоговая прибыль: %.2f", profit);
-        Helper.print("Итого денег у торговца: %.2f", trader.getMany());
-    }
-
 
     private static void initializeBuyingProcess(List<Goods> goods, Trader trader) {
         Helper.print("Список доступных товаров для покупки: ");
@@ -136,25 +118,18 @@ public class Application {
         }
     }
 
-    private static void getWorseGoodIfRain(List<Goods> goods) {
-        Random rnd = new Random();
-        double chanceOfRain = 0.3;
-        if (rnd.nextDouble() < chanceOfRain) {
-            goods.get(rnd.nextInt(goods.size())).decreaseQuality();
-            Helper.print("Дождь испортил товар.");
+    private static void sellGoods(Trader trader) {
+        Helper.print("-".repeat(90));
+        double profit = 0;
+        for (Goods good : trader.getPurchasedGoods()) {
+            trader.sell(good);
+            Helper.print("Продан товар: " + good);
+            Helper.print("На сумму: %.2f%n", good.getFinalPrice());
+            profit += good.getFinalPrice();
+            Helper.print("-".repeat(90));
         }
-    }
-
-    private static void deleteBestGoodIfBandits(List<Goods> goods) {
-        Comparator<Goods> cmp = Comparator.comparingDouble(Goods::getRateFromQuality).thenComparingInt(Goods::getPriceOfPurchase);
-        Goods best = Collections.max(goods, cmp);
-        Helper.print("Лучший товар - " + best);
-        goods.remove(best);
-    }
-
-    private static void getWorseGood(List<Goods> goods) {
-        Random rnd = new Random();
-        goods.get(rnd.nextInt(goods.size())).decreaseQuality();
-        Helper.print("Случайно испортился один из товаров. Это печально.");
+        trader.setMany(trader.getMany() + profit);
+        Helper.print("Итоговая прибыль: %.2f", profit);
+        Helper.print("Итого денег у торговца: %.2f", trader.getMany());
     }
 }

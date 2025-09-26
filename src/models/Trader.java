@@ -35,7 +35,7 @@ public class Trader {
     }
 
     public boolean isEnoughToBuy(Goods good) {
-        return maxLoad >= good.getWeight() && many >= good.getPriceOfPurchase(); //првоерка на деньги/вес
+        return maxLoad >= good.getWeight() && many >= good.getPriceOfPurchase();
     }
 
     public void buy(Goods good) {
@@ -50,7 +50,7 @@ public class Trader {
         return good.getFinalPrice();
     }
 
-    public void sellSpecialGoods(City city) {          // метод для продажи в конце если торговец поменял город
+    public void sellSpecialGoods(City city) {
         Set<Types> citySpecials = city.getSpecialGoods();
         List<Goods> toRemove = new ArrayList<>();
         for (Goods good : purchasedGoods) {

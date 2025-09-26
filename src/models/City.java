@@ -31,16 +31,6 @@ public class City {
         return specialGoods;
     }
 
-    public List<Goods> getMatchingSpecialGoods(List<Goods> trader) { // для сравнения по приезду продавца
-        List<Goods> matchingGoods = new ArrayList<>();
-        for (Goods good : trader) {
-            if (getSpecialGoods().contains(good.getType())) {
-                matchingGoods.add(good);
-            }
-        }
-        return matchingGoods;
-    }
-
     public String getName() {
         return name;
     }
