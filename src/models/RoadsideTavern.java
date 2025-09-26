@@ -40,14 +40,17 @@ public class RoadsideTavern {
                 List<Goods> newGoods = Helper.getRandomGoods(7);
                 Helper.print("Доступные товары из таверны...");
                 Helper.printAllGoods(newGoods);
+                int countGoods = trader.getPurchasedGoods().size();
+                Helper.print("Попытка купить товар");
 
-                Goods randomGood = newGoods.get(Helper.getRandom(newGoods.size() - 1));
-                Helper.print("Попытка купить товар: " + randomGood);
+                for (int i = 0; i < newGoods.size(); i++) {
+                    if (trader.isEnoughToBuy(newGoods.get(i))) {
+                        trader.buy(newGoods.get(i));
+                        Helper.print("Товар успешно куплен!");
+                        Helper.print(newGoods.get(i).toString());
+                    }
 
-                if (trader.isEnoughToBuy(randomGood)) {
-                    trader.buy(randomGood);
-                    Helper.print("Товар успешно куплен!");
-                } else {
+                }if(countGoods==trader.getPurchasedGoods().size()){
                     Helper.print("Не удалось купить товар: недостаточно денег или места.");
                     Helper.print("Денег осталось: " + trader.getMany());
                     Helper.print("Место в телеге осталось: " + trader.getMaxLoad());
