@@ -1,0 +1,11 @@
+1) Create remote repo
+2) Add collabarators
+3) Git clone
+4) Git status
+5) Git add
+6) Git commit
+7) Git push
+8) Git merge
+9) Git pull
+10) Git checkout of branches
+11) Git merge and push into master
